@@ -4,7 +4,7 @@ import TodoItem from './TodoItem'
 const TodoList = ({ tasks }) => {
   return (
     <div>
-      <h3>Your Task</h3>
+      <h2>Your Task</h2>
       {tasks.map((task,index) => (
         <TodoItem key={index} task={task}/>
       ))}
