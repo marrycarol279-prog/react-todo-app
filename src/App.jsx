@@ -5,7 +5,7 @@ import LoginIn from './pages/LogIn'
 import SignUp from './pages/SignUp'
 import { Link } from 'react-router-dom'
 
-const App = () => {
+function App() {
   return (
     <div>
       <Routes>

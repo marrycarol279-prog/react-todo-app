@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link,Links,Outlet } from 'react-router-dom'
-const signUp = () => {
+
+function signUp() {
   return (
-    <div >
+    <div>
       <Link to="/"> Home </Link>
       <h2>SignUp</h2>
       <p>Name</p>
@@ -12,7 +13,7 @@ const signUp = () => {
       <p>E-mail</p>
       <input type="text" />
       <p>Password</p>
-      <input type="text"/> <br />
+      <input type="text" /> <br />
       <button>Sign Up !!</button>
     </div>
   )
