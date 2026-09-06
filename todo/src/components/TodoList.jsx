@@ -20,14 +20,14 @@
         <h2>Your Task</h2>
         
         <div>
-          {tasks.map((task,index) => (
+          {tasks.map((element,index) => (
             <div key={index}>
               <input type="checkbox" onChange={(e)=>handleCheck(e)}/>
               {
-              (editIndex === index ? <input type='text' onKeyDown={(e) => { if(e.key === "Enter") {Update(index,(e.target.value))} } } /> : <span>{task}</span>)
+              (editIndex === index ? <input type='text' onKeyDown={(e) => { if(e.key === "Enter") {Update(index,(e.target.value))} } } /> : <span>{element.task}</span>)
               }
-              <button onClick = {() => del(index)}> Delete </button>
-              <button onClick={() => edit(index)}> Edit </button>
+              <button onClick = {() => del(element._id)}> Delete </button>
+              <button onClick={() => edit(index,element._id)}> Edit </button>
             </div>
           ))}
         </div>

@@ -1,37 +1,64 @@
-import React, { useState } from 'react';
 import './Home.css';
 import TodoList from '../components/TodoList';
 import { Link } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
 
 
 function home() {
+
+  const [tasks, setTasks] = useState([]);
   
-  let inputList = [];
-  
-  const [tasks, setTasks] = useState(inputList);
-  
-  const [input, setInput] = useState("");
+  useEffect(() =>{
+    fetch("http://localhost:5000/todos")
+    .then((response) => response.json())
+    .then((data) => setTasks(data.map((element,id) => ({"_id":element._id,"task":element.task}))))
+    .catch((error) => console.log(error)) 
+  },[])
+
+  const [input, setInput] = useState();
  
   const [index, setIndex] = useState(-1);
   
+  const [id, setID] = useState();
+  
   function Addbtn() {
-    setTasks([...tasks,input]);
+    fetch("http://localhost:5000/todos",{
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body : JSON.stringify({"task" : input})
+    })
+    .then((response) => response.json())
+    .then((data) => setTasks([...tasks, data]))
   }
   
-  function deleteTask(index){
-    let del = tasks.filter((t,i) => i != index);
-    setTasks(del)
+  function deleteTask(id){
+    fetch("http://localhost:5000/todos/" + id, {
+      method: "DELETE"
+    })
+    let del = tasks.filter((element) => element._id != id);
+    setTasks(del);
   }
 
-  function edit(i){
-    setIndex(i);
+  function edit(index,id){
+    setIndex(index);
+    setID(id);
   }
 
   function saveEdit(index,newText){
-    let updated = tasks.map((task,i) => (i === index ? newText : task));
+    fetch("http://localhost:5000/todos/" + id,{
+      method : "PUT",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body : JSON.stringify({"task":newText})
+    })
+    let updated = tasks.map((element,i) => (i === index ? ({"_id":element._id,"task":newText}) : element));
     setTasks(updated);
-    setIndex(-1); 
+    setIndex(-1);   
   }
 
   return (

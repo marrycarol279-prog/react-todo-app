@@ -1,7 +1,25 @@
 import React from 'react'
+import { useState } from 'react'
 import { Link,Outlet } from 'react-router-dom'
 
 function signUp() {
+  const [username,setUserName] = useState(""); 
+  const [password,setPassword] = useState(""); 
+  const [email,setEmail] = useState(""); 
+
+  function handleSignUp(){
+    fetch("http://localhost:5000/signup",{
+      method : "POST",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body : JSON.stringify({ 
+        "username": username, 
+        "password": password 
+      })
+    })
+  }
+
   return (
     <div>
       
@@ -10,17 +28,16 @@ function signUp() {
       <Link to="/login"> Login </Link>
 
       <h2>SignUp</h2>
-      <p>Name</p>
-      <input type="text" />
-      <p>Phone Number</p>
-      <input type="text" />
+      <p>Username</p>
+      <input type="text" onChange={(e) => setUserName(e.target.value)}/>
       <p>E-mail</p>
-      <input type="text" />
+      <input type="text" onChange={(e) => setEmail(e.target.value)}/>
       <p>Password</p>
-      <input type="text" /> <br />
-      <button>Sign Up !!</button>
+      <input type="text" onChange={(e) => setPassword(e.target.value)}/> <br />
+      <button onClick={() => handleSignUp()}>Sign Up !!</button>
     </div>
   )
 }
 
 export default signUp
+  
