@@ -8,7 +8,7 @@ function SignUp() {
   const [email,setEmail] = useState(""); 
 
   function handleSignUp(){
-    fetch("http://localhost:5000/signup",{
+    fetch(import.meta.env.VITE_API_URL + "/signup",{
       method : "POST",
       headers : {
         "Content-Type" : "application/json"

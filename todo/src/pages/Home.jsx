@@ -13,7 +13,7 @@ function Home() {
       navigate("/login", { replace: true })
       return
     }
-    fetch("http://localhost:5000/todos",{
+    fetch(import.meta.env.VITE_API_URL + "/todos",{
       headers :{
         "Authorization" : `Bearer ${localStorage.getItem("Token")}`
       }
@@ -30,7 +30,7 @@ function Home() {
   const [id, setID] = useState();
   
   function Addbtn() {
-    fetch("http://localhost:5000/todos",{
+    fetch(import.meta.env.VITE_API_URL + "/todos",{
       method: "POST",
       headers:{
         "Content-Type" : "application/json",
@@ -43,7 +43,7 @@ function Home() {
   }
   
   function deleteTask(id){
-    fetch("http://localhost:5000/todos/" + id, {
+    fetch(import.meta.env.VITE_API_URL + "/todos/" + id, {
       method: "DELETE",
       headers :{
         "Authorization" : `Bearer ${localStorage.getItem("Token")}`
@@ -59,7 +59,7 @@ function Home() {
   }
 
   function saveEdit(index,newText){
-    fetch("http://localhost:5000/todos/" + id,{
+    fetch(import.meta.env.VITE_API_URL + "/todos/" + id,{
       method : "PUT",
       headers : {
         "Content-Type" : "application/json",
