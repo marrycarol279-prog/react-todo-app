@@ -1,23 +1,29 @@
 import './Home.css';
 import TodoList from '../components/TodoList';
-import { Link } from 'react-router-dom';
-import { Outlet } from 'react-router-dom';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-
-function home() {
-
+function Home() {
+  const navigate = useNavigate(); 
   const [tasks, setTasks] = useState([]);
   
   useEffect(() =>{
-    fetch("http://localhost:5000/todos")
+    const token = localStorage.getItem("Token");
+    if(!token){
+      navigate("/login", { replace: true })
+      return
+    }
+    fetch("http://localhost:5000/todos",{
+      headers :{
+        "Authorization" : `Bearer ${localStorage.getItem("Token")}`
+      }
+    })
     .then((response) => response.json())
-    .then((data) => setTasks(data.map((element,id) => ({"_id":element._id,"task":element.task}))))
+    .then((data) => setTasks(data.map((element) => ({"_id":element._id,"task":element.task}))))
     .catch((error) => console.log(error)) 
-  },[])
+  },[navigate])
 
-  const [input, setInput] = useState();
+  const [input, setInput] = useState('');
  
   const [index, setIndex] = useState(-1);
   
@@ -27,7 +33,8 @@ function home() {
     fetch("http://localhost:5000/todos",{
       method: "POST",
       headers:{
-        "Content-Type": "application/json"
+        "Content-Type" : "application/json",
+        "Authorization" : `Bearer ${localStorage.getItem("Token")}`
       },
       body : JSON.stringify({"task" : input})
     })
@@ -37,7 +44,10 @@ function home() {
   
   function deleteTask(id){
     fetch("http://localhost:5000/todos/" + id, {
-      method: "DELETE"
+      method: "DELETE",
+      headers :{
+        "Authorization" : `Bearer ${localStorage.getItem("Token")}`
+      }
     })
     let del = tasks.filter((element) => element._id != id);
     setTasks(del);
@@ -52,7 +62,8 @@ function home() {
     fetch("http://localhost:5000/todos/" + id,{
       method : "PUT",
       headers : {
-        "Content-Type" : "application/json"
+        "Content-Type" : "application/json",
+        "Authorization" : `Bearer ${localStorage.getItem("Token")}`
       },
       body : JSON.stringify({"task":newText})
     })
@@ -101,4 +112,4 @@ function home() {
   );
 }
 
-export default home;
+export default Home;

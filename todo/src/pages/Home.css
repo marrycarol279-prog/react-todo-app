@@ -1,43 +1,155 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
-    background-color: black;
-    color: white;
+    margin: 0;
+    background: #f4f1ea;
+    color: #252525;
+    font-family: Arial, sans-serif;
 }
 
-#home{
+a {
+    display: inline-block;
+    margin: 18px 4px 0;
+    color: #315b7d;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#home,
+#status,
+#inputArea {
+    width: min(92%, 720px);
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#home {
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    margin-top: 42px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #d6cdbd;
 }
 
-#title{
-    text-align: 'left';
-    margin: 20px;
+#title {
+    margin: 0;
+    color: #24435a;
+    font-size: 36px;
 }
 
-
-#AddTask-btn{
-    margin-top: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-    border-radius: 8px;
+#AddTask-btn,
+.status-btn,
+#inputArea button {
+    border: 1px solid #315b7d;
+    border-radius: 5px;
+    background: #315b7d;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
 }
 
-#Input{
-    width: 100%;
-    margin-top: 1%;
-    padding: 1%;
-    border-radius: 8px;
+#AddTask-btn {
+    padding: 10px 16px;
+}
+
+#AddTask-btn:hover,
+.status-btn:hover,
+#inputArea button:hover {
+    background: #24435a;
+}
+
+h2 {
+    width: min(92%, 720px);
+    margin: 24px auto 10px;
+    color: #24435a;
+    font-size: 20px;
 }
 
 #status {
     display: flex;
-    justify-content: space-around;
+    gap: 10px;
 }
 
-.status-btn{
-    border-radius: 25% 10%;
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-bottom: 10px;
-    padding-right: 10px;
+.status-btn {
+    padding: 8px 12px;
+    background: transparent;
+    color: #315b7d;
+}
+
+#inputArea {
+    margin-top: 20px;
+}
+
+#inputArea > div > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border-left: 4px solid #e3a857;
+    border-radius: 4px;
+    background: white;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
+}
+
+#inputArea > div > div span {
+    flex: 1;
+    overflow-wrap: anywhere;
+}
+
+#inputArea > div > div input[type='text'] {
+    flex: 1;
+    min-width: 0;
+    padding: 7px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
+
+#inputArea button {
+    padding: 6px 9px;
+    font-size: 13px;
+}
+
+#Input {
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    background: white;
+    font-size: 15px;
+}
+
+#Input:focus,
+#inputArea > div > div input[type='text']:focus {
+    outline: 2px solid #e3a857;
+    border-color: #315b7d;
+}
+
+@media (max-width: 520px) {
+    #home {
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    #title {
+        font-size: 30px;
+    }
+
+    #inputArea > div > div {
+        flex-wrap: wrap;
+    }
+
+    #inputArea > div > div span,
+    #inputArea > div > div input[type='text'] {
+        flex-basis: calc(100% - 30px);
+    }
 }

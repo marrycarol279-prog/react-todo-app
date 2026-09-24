@@ -1,8 +1,8 @@
-import React from 'react'
 import { useState } from 'react'
-import { Link,Outlet } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import './Auth.css'
 
-function signUp() {
+function SignUp() {
   const [username,setUserName] = useState(""); 
   const [password,setPassword] = useState(""); 
   const [email,setEmail] = useState(""); 
@@ -15,29 +15,39 @@ function signUp() {
       },
       body : JSON.stringify({ 
         "username": username, 
-        "password": password 
+        "password": password,
+        "email": email
       })
     })
   }
 
   return (
-    <div>
-      
-      <Link to="/"> Home </Link>
-      <Link to="/signUp"> Sign Up </Link>
-      <Link to="/login"> Login </Link>
+    <div className="ap">
+      <nav className="an">
+        <Link to="/">Home</Link>
+        <Link to="/signUp">Sign Up</Link>
+        <Link to="/login">Login</Link>
+      </nav>
 
-      <h2>SignUp</h2>
-      <p>Username</p>
-      <input type="text" onChange={(e) => setUserName(e.target.value)}/>
-      <p>E-mail</p>
-      <input type="text" onChange={(e) => setEmail(e.target.value)}/>
-      <p>Password</p>
-      <input type="text" onChange={(e) => setPassword(e.target.value)}/> <br />
-      <button onClick={() => handleSignUp()}>Sign Up !!</button>
+      <main className="ac">
+        <p className="ae">MY TASKS</p>
+        <h1>Create an account</h1>
+        <p className="as">Start keeping track of your tasks.</p>
+
+        <label htmlFor="su1">Username</label>
+        <input id="su1" type="text" onChange={(e) => setUserName(e.target.value)}/>
+
+        <label htmlFor="se1">Email</label>
+        <input id="se1" type="email" onChange={(e) => setEmail(e.target.value)}/>
+
+        <label htmlFor="sp1">Password</label>
+        <input id="sp1" type="password" onChange={(e) => setPassword(e.target.value)}/>
+
+        <button className="ab" onClick={() => handleSignUp()}>Sign up</button>
+      </main>
     </div>
   )
 }
 
-export default signUp
+export default SignUp
   
