@@ -11,17 +11,13 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-if (!process.env.VERCEL) {
-    dotenv.config({ path: "D:/P_Project/todobackend/.env" })
-}
+dotenv.config()
+
+app.listen(process.env.PORT || 5000, () => console.log("hello"))
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("Connected"))
 .catch((e) => console.log(util.inspect(e, { depth: null })))
-
-if (!process.env.VERCEL) {
-    app.listen(5000, () => console.log("hello"))
-}
 
 const todoSchema = new mongoose.Schema({
     task : String ,
