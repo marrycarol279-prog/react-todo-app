@@ -72,11 +72,17 @@ function Home() {
     setIndex(-1);   
   }
 
+  function handleSignOut() {
+    localStorage.removeItem('Token')
+    navigate('/login', { replace: true })
+  }
+
   return (
     <>
     <Link to="/"> Home </Link>
     <Link to="/signUp"> Sign Up </Link>
     <Link to="/login"> Login </Link>
+    <button className="signout-btn" onClick={handleSignOut}>Sign Out</button>
 
       <div id="home">
 

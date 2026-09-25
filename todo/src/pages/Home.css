@@ -50,6 +50,29 @@ a:hover {
     text-decoration: none;
 }
 
+.signout-btn {
+    margin: 18px 10px 0;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 12px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(58, 90, 74, 0.18);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.signout-btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.96;
+}
+
+.signout-btn:active {
+    transform: translateY(0);
+}
+
 #home,
 #status,
 #inputArea,

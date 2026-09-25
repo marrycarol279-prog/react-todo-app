@@ -26,8 +26,9 @@ const todoSchema = new mongoose.Schema({
 })
 
 const userSchema = new mongoose.Schema({ 
-    username : String, 
-    password : String, 
+    username : { type: String, required: true, unique: true, trim: true, lowercase: true }, 
+    password : { type: String, required: true }, 
+    email : { type: String, required: true, unique: true, trim: true, lowercase: true }, 
 })
 
 const Todo = mongoose.model("Todo",todoSchema)  
@@ -40,38 +41,68 @@ app.get("/",function (req,res){
 
 app.post("/signup",async (req,res) => { 
     try{
-        let username = req.body.username; 
-        let password = req.body.password;
+        const username = req.body.username?.trim();
+        const password = req.body.password;
+        const email = req.body.email?.trim();
+
+        if (!username || !password || !email) {
+            return res.status(400).json({ message: 'Please fill in all fields.' })
+        }
+
+        const normalizedUsername = username.toLowerCase();
+        const normalizedEmail = email.toLowerCase();
+
+        const existingUser = await User.findOne({
+            $or: [
+                { username: normalizedUsername },
+                { email: normalizedEmail }
+            ]
+        })
+
+        if (existingUser) {
+            return res.status(409).json({ message: 'User already exists.' })
+        }
+
         const hashedPassword = await bcrypt.hash(password,10); 
         await User.create({
-            'username' : username,
-            'password' : hashedPassword,
+            username: normalizedUsername,
+            password: hashedPassword,
+            email: normalizedEmail,
         })
-        res.send('success')
+
+        res.status(201).json({ message: 'Signup successful. Please log in.' })
     } catch(error){
         console.log(error);
-        res.status(500).send("Server error")
+        res.status(500).json({ message: 'Server error' })
     }
 })
 
 app.post("/login",async (req,res) => {
     try{
-        const user = await User.findOne({"username" : req.body.username});
-        if(user != null && user != undefined){
-            if(await bcrypt.compare(req.body.password,user.password)){
-                const token = jwt.sign({id : user._id}, process.env.JWT_KEY, {expiresIn:"24h"})
-                res.send({Token : token ,msg : "data matched !!"})
-            }       
-            else{
-                res.send('Wrong Password !!')
-            }
+        const username = req.body.username?.trim();
+        const password = req.body.password;
+
+        if (!username || !password) {
+            return res.status(400).json({ message: 'Please enter username and password.' })
         }
-        else{
-            res.send('data not found')
+
+        const normalizedUsername = username.toLowerCase();
+        const user = await User.findOne({ username: normalizedUsername })
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' })
         }
+
+        const isPasswordCorrect = await bcrypt.compare(password, user.password)
+        if (!isPasswordCorrect) {
+            return res.status(401).json({ message: 'Wrong password.' })
+        }
+
+        const token = jwt.sign({ id: user._id }, process.env.JWT_KEY, { expiresIn: '24h' })
+        res.json({ Token: token, message: 'Login successful.' })
     } catch(error){
         console.log(error);
-        res.status(500).send("Server error")
+        res.status(500).json({ message: 'Server error' })
     }
 })
 
