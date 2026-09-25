@@ -1,108 +1,186 @@
+:root {
+    --auth-bg: #f5f0ea;
+    --auth-panel: #fffdfb;
+    --auth-primary: #3a5a4a;
+    --auth-primary-dark: #2d4338;
+    --auth-accent: #d8a86e;
+    --auth-text: #2b2a2a;
+    --auth-muted: #6e655d;
+    --auth-line: #e8dcc7;
+}
+
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    background: #f4f1ea;
-    color: #252525;
-    font-family: Arial, sans-serif;
+    background: linear-gradient(180deg, #f8f2ea 0%, #f3efe9 100%);
+    color: var(--auth-text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+    background: var(--auth-accent);
+    color: #fff;
 }
 
 .ap {
     min-height: 100vh;
-    padding: 18px 20px 60px;
-    background: linear-gradient(135deg, #f4f1ea 0%, #e9eef0 100%);
+    padding: 24px 20px 60px;
+    background: linear-gradient(180deg, #f7f1ea 0%, #f0ece5 100%);
 }
 
 .an {
     display: flex;
     justify-content: center;
-    gap: 24px;
+    gap: 18px;
+    flex-wrap: wrap;
 }
 
 .an a {
-    color: #315b7d;
-    font-size: 14px;
+    color: var(--auth-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
     text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 999px;
+    transition: background 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .an a:hover {
-    text-decoration: underline;
+    background: rgba(58, 90, 74, 0.07);
+    text-decoration: none;
 }
 
+/* card */
 .ac {
-    width: min(100%, 410px);
-    margin: 70px auto 0;
-    padding: 34px 36px 38px;
-    border-top: 5px solid #e3a857;
-    border-radius: 8px;
-    background: white;
-    box-shadow: 0 8px 24px rgb(36 67 90 / 12%);
+    width: min(100%, 430px);
+    margin: 72px auto 0;
+    padding: 30px 30px 32px;
+    border: 1px solid var(--auth-line);
+    border-top: 5px solid var(--auth-accent);
+    border-radius: 20px;
+    background: var(--auth-panel);
+    box-shadow: 0 14px 30px rgba(65, 50, 34, 0.07);
 }
 
 .ae {
-    margin: 0 0 8px;
-    color: #e3a857;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 1.5px;
+    margin: 0 0 10px;
+    color: var(--auth-accent);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.18rem;
+    text-transform: uppercase;
 }
 
 .ac h1 {
     margin: 0;
-    color: #24435a;
-    font-size: 30px;
+    color: var(--auth-primary-dark);
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    letter-spacing: -0.04em;
 }
 
 .as {
-    margin: 8px 0 28px;
-    color: #68747a;
-    font-size: 14px;
+    margin: 10px 0 26px;
+    color: var(--auth-muted);
+    font-size: 0.96rem;
+    line-height: 1.6;
 }
 
 .ac label {
     display: block;
-    margin: 16px 0 6px;
-    color: #24435a;
-    font-size: 14px;
-    font-weight: bold;
+    margin: 16px 0 8px;
+    color: var(--auth-primary-dark);
+    font-size: 0.9rem;
+    font-weight: 700;
 }
 
 .ac input {
     width: 100%;
-    padding: 11px 12px;
-    border: 1px solid #b9c0c2;
-    border-radius: 4px;
-    background: #fbfcfc;
-    font-size: 15px;
+    padding: 12px 14px;
+    border: 1px solid var(--auth-line);
+    border-radius: 12px;
+    background: #fffdfb;
+    color: var(--auth-text);
+    font-size: 1rem;
 }
 
+/* the old rule here used space syntax inside rgba() which browsers were silently
+   dropping, so focus never actually showed a border color change */
 .ac input:focus {
-    outline: 2px solid #e3a857;
-    border-color: #315b7d;
+    outline: 2px solid rgba(216, 168, 110, 0.24);
+    border-color: rgba(58, 90, 74, 0.5);
+}
+
+/* Chrome/Edge force a yellow background on autofilled fields no matter what
+   background-color you set — this is the only way around it */
+.ac input:-webkit-autofill,
+.ac input:-webkit-autofill:hover,
+.ac input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--auth-text);
+    -webkit-box-shadow: 0 0 0 1000px #fffdfb inset;
+    transition: background-color 9999s ease-in-out 0s;
 }
 
 .ab {
     width: 100%;
-    margin-top: 26px;
-    padding: 11px;
-    border: 0;
-    border-radius: 4px;
-    background: #315b7d;
+    margin-top: 28px;
+    padding: 13px 16px;
+    border: none;
+    border-radius: 12px;
+    background: var(--auth-primary);
     color: white;
     cursor: pointer;
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 1rem;
+    font-weight: 700;
+    box-shadow: 0 10px 18px rgba(58, 90, 74, 0.18);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .ab:hover {
-    background: #24435a;
+    transform: translateY(-1px);
+    box-shadow: 0 12px 20px rgba(58, 90, 74, 0.22);
+}
+
+.ab:active {
+    transform: translateY(0);
+}
+
+.ab:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.ac input:focus,
+.an a,
+.ab {
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .an a,
+    .ab {
+        transition: none;
+    }
 }
 
 @media (max-width: 480px) {
+    .ap {
+        padding-inline: 14px;
+    }
+
     .ac {
         margin-top: 48px;
-        padding: 28px 24px 30px;
+        padding: 28px 22px 30px;
+    }
+
+    .an {
+        gap: 10px;
     }
 }

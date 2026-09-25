@@ -16,22 +16,29 @@
   }
 
     return (
-      <div>
+      <div className="task-list">
         <h2>Your Task</h2>
-        
-        <div>
+
+        <div className="task-items">
           {tasks.map((element,index) => (
-            <div key={index}>
-              <input type="checkbox" onChange={(e)=>handleCheck(e)}/>
+            <div className="task-item" key={element._id ?? index}>
+              <label className="task-check">
+                <input type="checkbox" onChange={(e)=>handleCheck(e)}/>
+                <span className="checkmark" aria-hidden="true" />
+              </label>
+
               {
-              (editIndex === index ? <input type='text' onKeyDown={(e) => { if(e.key === "Enter") {Update(index,(e.target.value))} } } /> : <span>{element.task}</span>)
+              (editIndex === index ? <input className='task-edit-input' type='text' onKeyDown={(e) => { if(e.key === "Enter") {Update(index,(e.target.value))} } } /> : <span className="task-text">{element.task}</span>)
               }
-              <button onClick = {() => del(element._id)}> Delete </button>
-              <button onClick={() => edit(index,element._id)}> Edit </button>
+
+              <div className="task-actions">
+                <button className="task-action delete" onClick = {() => del(element._id)}>Delete</button>
+                <button className="task-action edit" onClick={() => edit(index,element._id)}>Edit</button>
+              </div>
             </div>
           ))}
         </div>
-      
+
       </div>
     );
   }
